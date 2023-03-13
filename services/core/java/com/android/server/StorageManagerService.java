@@ -381,7 +381,7 @@ class StorageManagerService extends IStorageManager.Stub
     private volatile boolean mChargingRequired;
     private volatile int mMinGCSleepTime;
     private volatile int mTargetDirtyRatio;
-    private volatile boolean mNeedGC;
+    private volatile boolean mNeedGC = true;
 
     private volatile boolean mPassedLifetimeThresh;
     // Tracking storage write amounts in one period
@@ -1617,8 +1617,6 @@ class StorageManagerService extends IStorageManager.Stub
             // Adoptable public disks are visible to apps, since they meet
             // public API requirement of being in a stable location.
             if (vol.disk.isAdoptable()) {
-                vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE_FOR_WRITE;
-            } else if (vol.disk.isSd()) {
                 vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE_FOR_WRITE;
             }
 
